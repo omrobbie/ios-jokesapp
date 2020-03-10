@@ -35,7 +35,11 @@ class ViewController: UIViewController {
 
             do {
                 let result = try JSONDecoder().decode(Joke.self, from: data!)
-                print(result)
+
+                DispatchQueue.main.async {
+                    self.txtSetup.text = result.setup
+                    self.txtDelivery.text = result.delivery
+                }
             } catch let jsonError {
                 debugPrint("JSON Decoder Error: \(jsonError)")
             }
