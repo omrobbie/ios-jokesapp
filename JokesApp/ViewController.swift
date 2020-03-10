@@ -15,8 +15,25 @@ class ViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        fetchJson()
+    }
+
+    func fetchJson() {
+        let urlString = "https://sv443.net/jokeapi/category/programming"
+        guard let url = URL(string: urlString) else {return}
+
+        URLSession.shared.dataTask(with: url) { (data, response, error) in
+            if let error = error {
+                debugPrint("Error: \(error.localizedDescription)")
+                return
+            }
+
+            guard let data = String(data: data!, encoding: .utf8) else {return}
+            print(data)
+        }.resume()
     }
 
     @IBAction func btnReload(_ sender: Any) {
+        fetchJson()
     }
 }
