@@ -8,6 +8,11 @@
 
 import UIKit
 
+struct Joke: Decodable {
+    let setup: String
+    let delivery: String
+}
+
 class ViewController: UIViewController {
 
     @IBOutlet weak var txtSetup: UILabel!
@@ -19,7 +24,7 @@ class ViewController: UIViewController {
     }
 
     func fetchJson() {
-        let urlString = "https://sv443.net/jokeapi/category/programming"
+        let urlString = "https://sv443.net/jokeapi/v2/joke/Programming?type=twopart"
         guard let url = URL(string: urlString) else {return}
 
         URLSession.shared.dataTask(with: url) { (data, response, error) in
@@ -28,8 +33,12 @@ class ViewController: UIViewController {
                 return
             }
 
-            guard let data = String(data: data!, encoding: .utf8) else {return}
-            print(data)
+            do {
+                let result = try JSONDecoder().decode(Joke.self, from: data!)
+                print(result)
+            } catch let jsonError {
+                debugPrint("JSON Decoder Error: \(jsonError)")
+            }
         }.resume()
     }
 
