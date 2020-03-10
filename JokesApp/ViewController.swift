@@ -10,7 +10,13 @@ import UIKit
 
 class ViewController: UIViewController {
 
+    @IBOutlet weak var txtSetup: UILabel!
+    @IBOutlet weak var txtDelivery: UILabel!
+
     override func viewDidLoad() {
         super.viewDidLoad()
+    }
+
+    @IBAction func btnReload(_ sender: Any) {
     }
 }
